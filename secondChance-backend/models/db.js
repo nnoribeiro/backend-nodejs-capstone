@@ -15,14 +15,22 @@ async function connectToDatabase() {
 
     const client = new MongoClient(url);      
 
-    // Task 1: Connect to MongoDB
-    // {{insert code}}
+    try {
+        // Task 1: Connect to MongoDB
+        await client.connect();
+        console.log("Connected successfully to server");
 
-    // Task 2: Connect to database giftDB and store in variable dbInstance
-    //{{insert code}}
+        // Task 2: Connect to database secondChance and store in variable dbInstance
+        dbInstance = client.db(dbName);
 
-    // Task 3: Return database instance
-    // {{insert code}}
+        // Task 3: Return database instance
+        return dbInstance
+    } catch (err) {
+        console.error(err);
+    } finally {
+        // Close the connection
+        await client.close();
+    }    
 }
 
 module.exports = connectToDatabase;
