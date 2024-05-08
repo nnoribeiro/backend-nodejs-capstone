@@ -14,7 +14,7 @@ const storage = multer.diskStorage({
   },
   filename: function (req, file, cb) {
     cb(null, file.originalname) // Use the original file name
-  },
+  }
 })
 
 const upload = multer({ storage: storage })
@@ -31,7 +31,6 @@ router.get('/', async (req, res, next) => {
     const secondChanceItems = await collection.find({}).toArray()
     // Step 2: task 4
     res.json(secondChanceItems)
-
   } catch (e) {
     logger.console.error('oops something went wrong', e)
     next(e)
@@ -48,13 +47,13 @@ router.post('/', upload.single('file'), async (req, res, next) => {
     // Step 3: task 3
     let secondChanceItem = req.body
     // Step 3: task 4
-    const lastItemQuery = await collection.find().sort({ 'id': -1 }).limit(1)
+    const lastItemQuery = await collection.find().sort({ id: -1 }).limit(1)
     await lastItemQuery.forEach(item => {
       secondChanceItem.id = (parseInt(item.id) + 1).toString()
     })
     // Step 3: task 5
-    const date_added = Math.floor(new Date().getTime() / 1000)
-    secondChanceItem.date_added = date_added
+    const dateAdded = Math.floor(new Date().getTime() / 1000)
+    secondChanceItem.date_added = dateAdded
     secondChanceItem = await collection.insertOne(secondChanceItem)
 
     res.status(201).json(secondChanceItem.ops[0])
@@ -98,7 +97,7 @@ router.put('/:id', async (req, res, next) => {
       logger.error('secondChanceItem not found')
       return res.status(404).json({ error: 'secondChanceItem not found' })
     }
-    //Step 5: task 4
+    // Step 5: task 4
     secondChanceItem.category = req.body.category
     secondChanceItem.condition = req.body.condition
     secondChanceItem.age_days = req.body.age_days
@@ -113,9 +112,9 @@ router.put('/:id', async (req, res, next) => {
     )
     // Step 5: task 5
     if (updatepreloveItem) {
-      res.json({ 'uploaded': 'success' })
+      res.json({ uploaded: 'success' })
     } else {
-      res.json({ 'uploaded': 'failed' })
+      res.json({ uploaded: 'failed' })
     }
   } catch (e) {
     next(e)
@@ -138,7 +137,7 @@ router.delete('/:id', async (req, res, next) => {
     }
     // Step 6: task 4
     await collection.deleteOne({ id })
-    res.json({ 'deleted': 'success' })
+    res.json({ deleted: 'success' })
   } catch (e) {
     next(e)
   }
