@@ -28,6 +28,7 @@ router.get('/', async (req, res, next) => {
         if (req.query.age_years) {
             query.age_years = { $lte: parseInt(req.query.age_years) };
         }
+        console.log(query)
 
         // Task 4: Fetch filtered items using the find(query) method. Make sure to use await and store the result in the `items` constant
         const items = await collection.find(query).toArray()
