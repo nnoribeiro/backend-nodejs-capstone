@@ -13,9 +13,7 @@ const port = 3060
 
 // Connect to MongoDB; we just do this one time
 connectToDatabase()
-    .then(() => {
-        pinoLogger.info('Connected to DB')
-    })
+    .then(() => pinoLogger.info('Connected to DB'))
     .catch((e) => console.error('Failed to connect to DB', e))
 
 app.use(express.json())
@@ -30,7 +28,6 @@ const secondChanceItemsRoutes = require('./routes/secondChanceItemsRoutes')
 
 // Search API Task 1: import the searchRoutes and store in a constant called searchRoutes
 const searchRoutes = require('./routes/searchRoutes')
-
 
 const pinoHttp = require('pino-http')
 const logger = require('./logger')
