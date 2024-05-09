@@ -10,4 +10,10 @@ COPY . .
 
 EXPOSE 3060
 
+# import data to mongo
+WORKDIR /usr/src/app/util/import-mongo
+RUN npm install
+
+WORKDIR /usr/src/app
+
 CMD ["node", "app.js"]
